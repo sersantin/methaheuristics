@@ -18,7 +18,7 @@ public class Graph extends Instance {
 	/**
 	 * Default builder.
 	 */
-	public Graph (){
+	public Graph(){
 		
 	}
 	
