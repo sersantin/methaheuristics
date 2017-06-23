@@ -1,9 +1,8 @@
-package Solutions;
+package solutions;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import graph.Graph;
-import Solutions.*;
 
 public class HillClimbing extends TSP {
 

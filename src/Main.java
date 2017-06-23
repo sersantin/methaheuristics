@@ -1,6 +1,6 @@
-import Solutions.*;
-import graph.Graph;
-
+import solutions.*;
+import graph.*;
+import Statistics.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,17 +18,18 @@ public class Main {
         //System.out.println(graph.getName());
         //System.out.println(graph.getMatrixItem(1,2));
 
-			/*TSP solution = new TSP(graph);
-			solution.printData();
-			System.out.println();
-			System.out.println("COST");
-			System.out.println();
-			System.out.println("One Candidate Solution:		"
-					+solution.calculateCostTour(solution.randomSolution()));
-			System.out.println("Other Candidate Solution:	"
-					+solution.calculateCostTour(solution.randomSolution()));
-		*/
+//			TSP solution = new TSP(graph);
+//			solution.printData();
+//			System.out.println();
+//			System.out.println("COST");
+//			System.out.println();
+//			System.out.println("One Candidate Solution:		"
+//					+solution.calculateCostTour(solution.randomSolution()));
+//			System.out.println("Other Candidate Solution:	"
+//					+solution.calculateCostTour(solution.randomSolution()));
+
         int opc1, opc2;
+        String name = "";
         Graph graph = new Graph();
 
         Scanner sc = new Scanner(System.in);
@@ -37,27 +38,48 @@ public class Main {
 
         if (opc1 == 1) {
             graph = new Graph("burma14");
+            name = "burma14";
         } else if (opc1 == 2) {
             graph = new Graph("ft70");
+            name = "ft70";
         } else {
             System.err.println("Option not found");
             System.exit(-1);
         }
 
         System.out.println();
-        System.out.print("1. HillClimbing\nSelect Solution: ");
+        System.out.print("1. Hill Climbing\n2. Simulated Annealing\nSelect Solution: ");
         opc2 = sc.nextInt();
+
+        ArrayList<Integer> solutions = new ArrayList<>();
+        ArrayList<Double> results = new ArrayList<> ();
 
         if (opc2 == 1) {
             for (int i = 0; i < 20; i++) {
-                ArrayList<Integer> solution = new ArrayList<>();
-                ArrayList<Double> result = new ArrayList<> ();
                 for (int j = 0; j < 100; j++) {
                     HillClimbing problem = new HillClimbing(graph);
-                    solution = problem.solve();
+                    solutions = problem.solve();
                     problem.printResult();
                 }
 
+            }
+
+        }
+        else if (opc2 == 2) {
+
+            SimulatedAnnealing problem = new SimulatedAnnealing(graph);
+
+            for(int i = 0; i < 20; i++) {
+
+                for(int j = 0; j < 100; j++) {
+
+                    solutions = problem.solveSimulatedAnnealing(problem.randomSolution());
+                    results.add(problem.calculateCostTour(solutions));
+                }
+
+                Statistics statistics = new Statistics(results);
+                statistics.saveStatistics(name+"_output.csv", ";");
+                statistics.showStatistics();
             }
 
         }
