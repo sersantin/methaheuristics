@@ -92,4 +92,22 @@ public class TSP {
     public void setTSP(Graph tsp) {
         mTsp = tsp;
     }
+
+    protected ArrayList<Integer> twoOptSwap(ArrayList<Integer> bestTour, int i, int k) {
+        ArrayList<Integer> newRoute = new ArrayList<Integer> ();
+
+        for(int j = 0; j < i; j++){
+            newRoute.add(bestTour.get(j));
+        }
+
+        for(int j = k; j >= i; j--){
+            newRoute.add(bestTour.get(j));
+        }
+
+        for(int j = k+1; j < bestTour.size(); j++){
+            newRoute.add(bestTour.get(j));
+        }
+
+        return newRoute;
+    }
 }

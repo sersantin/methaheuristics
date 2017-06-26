@@ -48,7 +48,7 @@ public class Main {
         }
 
         System.out.println();
-        System.out.print("1. Hill Climbing\n2. Simulated Annealing\nSelect Solution: ");
+        System.out.print("1. Hill Climbing\n2. Simulated Annealing\n3. Variable Neighborhood Search\n4. Taboo Search\nSelect Solution: ");
         opc2 = sc.nextInt();
 
         ArrayList<Integer> solutions = new ArrayList<>();
@@ -59,11 +59,15 @@ public class Main {
                 for (int j = 0; j < 100; j++) {
                     HillClimbing problem = new HillClimbing(graph);
                     solutions = problem.solve();
-                    problem.printResult();
+                    results.add(problem.calculateCostTour(solutions));
+                    //problem.printResult();
                 }
 
-            }
 
+                Statistics statistics = new Statistics(results);
+                statistics.saveStatistics(name + "_sa_output.csv", ";");
+                statistics.showStatistics();
+            }
         }
         else if (opc2 == 2) {
 
@@ -78,7 +82,45 @@ public class Main {
                 }
 
                 Statistics statistics = new Statistics(results);
-                statistics.saveStatistics(name+"_output.csv", ";");
+                statistics.saveStatistics(name+"_sa_output.csv", ";");
+                statistics.showStatistics();
+            }
+
+        }
+        else if (opc2 == 3) {
+            System.out.println();
+            System.out.print("Select max neighborhoods: ");
+            opc1 = sc.nextInt();
+            SimulatedAnnealing problem = new SimulatedAnnealing(graph);
+
+            for(int i = 0; i < 20; i++) {
+
+                for(int j = 0; j < 100; j++) {
+
+                    solutions = problem.solveVariableNeighborhoodSearch(problem.randomSolution(),opc1);
+                    results.add(problem.calculateCostTour(solutions));
+                }
+
+                Statistics statistics = new Statistics(results);
+                statistics.saveStatistics(name+"_vns_sa_output.csv", ";");
+                statistics.showStatistics();
+            }
+
+        }
+        else if (opc2 == 4) {
+
+            TabooSearch problem = new TabooSearch(graph);
+
+            for(int i = 0; i < 20; i++) {
+
+                for(int j = 0; j < 100; j++) {
+                    solutions = problem.solve();
+                    //problem.printResult();
+                    results.add(problem.calculateCostTour(solutions));
+                }
+
+                Statistics statistics = new Statistics(results);
+                statistics.saveStatistics(name+"_vns_sa_output.csv", ";");
                 statistics.showStatistics();
             }
 

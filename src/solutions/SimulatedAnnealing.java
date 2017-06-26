@@ -15,7 +15,7 @@ public class SimulatedAnnealing extends TSP{
 
         int i = 0;
         while (i < 1000) {
-            newSolution = twoOPT (finalSolution);
+            newSolution = VariableNeighborhoodSearch(finalSolution);
 
             Double costFinalSolution = calculateCostTour(finalSolution);
             Double costNewSolution = calculateCostTour(newSolution);
@@ -44,7 +44,7 @@ public class SimulatedAnnealing extends TSP{
         return finalSolution;
     }
 
-    private ArrayList<Integer> twoOPT(ArrayList<Integer> bT) {
+    private ArrayList<Integer> VariableNeighborhoodSearch(ArrayList<Integer> bT) {
         boolean go_start = false;
         boolean improvement = true;
 
@@ -82,25 +82,6 @@ public class SimulatedAnnealing extends TSP{
 
         return bestTour;
     }
-
-    private ArrayList<Integer> twoOptSwap(ArrayList<Integer> bestTour, int i, int k) {
-        ArrayList<Integer> newRoute = new ArrayList<Integer> ();
-
-        for(int j = 0; j < i; j++){
-            newRoute.add(bestTour.get(j));
-        }
-
-        for(int j = k; j >= i; j--){
-            newRoute.add(bestTour.get(j));
-        }
-
-        for(int j = k+1; j < bestTour.size(); j++){
-            newRoute.add(bestTour.get(j));
-        }
-
-        return newRoute;
-    }
-
 
     public ArrayList<Integer> solveVariableNeighborhoodSearch(ArrayList<Integer> finalSolution, int maxNeighbour){
         int neighbour = 0;
